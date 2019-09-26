@@ -1,3 +1,21 @@
+int ledState1 = LOW;
+int ledState2 = LOW; 
+int ledState3= LOW;        
+unsigned long previousMillis1 = 0;                    
+unsigned long previousMillis2 = 1000;                  
+unsigned long previousMillis3 = 2000;   
+const long interval = 1000;
+void setup() {
+  // put your setup code here, to run once:
+ pinMode(D0,OUTPUT);
+ pinMode(D1,OUTPUT);
+ pinMode(D2,OUTPUT);
+  pinMode(D3,OUTPUT);
+  pinMode(D4,OUTPUT);
+  pinMode(D5,OUTPUT);
+  Serial.begin(115200);
+}
+
 void loop()
 {
   // check to see if it's time to change the state of the LED
@@ -11,13 +29,8 @@ void loop()
       ledState1 = HIGH;
       digitalWrite(D0,ledState1);
       }
-      else
-      {
-        ledState1 = LOW;
-        digitalWrite(D0,ledState1);
-      }
   }
-  if((ledState1 == HIGH) && (ledState3 == LOW) && (currentMillis - previousMillis2 >= interval+500))
+  if((ledState1 == HIGH) && (ledState3 == LOW) && ((currentMillis - previousMillis2) >= (interval+500)))
   {
   
     previousMillis2 = currentMillis;
@@ -26,13 +39,8 @@ void loop()
       ledState2 = HIGH;
       digitalWrite(D4,ledState2);
     }
-      else
-      {
-        ledState2 = LOW;
-        digitalWrite(D4,ledState2);
-        }
     }
-  if((ledState1 == HIGH) && (ledState2 == HIGH) && (currentMillis - previousMillis3 >= interval+1000))
+  if((ledState1 == HIGH) && (ledState2 == HIGH) && ((currentMillis - previousMillis3) >= (interval+800)))
   {
      
     previousMillis3 = currentMillis;
@@ -41,10 +49,35 @@ void loop()
       ledState3 = HIGH;
       digitalWrite(D5,ledState3);
     }
-      else
+     previousMillis1 = 0;                    
+    previousMillis2 = 1000;             
+    previousMillis3 = 2000; 
+    }
+    if((ledState2 == HIGH) && (ledState1 == HIGH) &&((currentMillis - previousMillis3) >= (interval)))
+   {
+    previousMillis3 = currentMillis;
+      if(ledState3 == HIGH)
       {
         ledState3 = LOW;
         digitalWrite(D5,ledState3);
-        }
-    }
+      }
+   }
+  if((ledState1 == HIGH) && (ledState3 == LOW) && (currentMillis - previousMillis2) >= (interval+500))
+  {
+    previousMillis2 = currentMillis;
+      if(ledState2 == HIGH)
+      {
+        ledState2 = LOW;
+        digitalWrite(D4,ledState2);
+      }
+  }
+   if((ledState2 == LOW) && (ledState3 == LOW) && (currentMillis - previousMillis1) >= (interval+800))
+  {
+    previousMillis1 = currentMillis;
+      if(ledState1 == HIGH)
+      {
+        ledState1 = LOW;
+        digitalWrite(D0,ledState1);
+      }
+  }
   }
